@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="home.css">
+
+
+    <title>Add Challenge Page</title>
+
+  </head>
+    </head>
+   <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="home.html">About</a>
+  <a href="addChallenge.html">Add Challenge</a>
+
+  </div>
+  <span onclick="openNav()">&#9776; <!-- Results in ☰ -->
+</span>
+<h2>Create New Challenge</h2>
+
+<form>
+  Challenge Name:<br>
+  <input type="text" name="challengeName">
+  <br>
+  Start Date:<br>
+  <input type="text" name="startDate">
+  <br>
+  End Date:<br>
+  <input type="text" name="endDate">
+  <br>
+  Hashtag:<br>
+  <input type="text" name="hashtagId">
+  <br>
+  Media Type:<br>
+  <input type="text" name="mediaType">
+  <br>
+  Challenge Description:<br>
+  <input type="text" name="challengeDescription">
+  <br>
+  Create Timestamp:<br>
+  <input type="text" name="createdTimestamp">
+  <br>
+</form>
+
+<br><br>
+<input type="submit" value="Add Challenge">
+<script type="text/javascript">
+	$.post(URL/addChallenge, {challengeName, startDate,endDate,hashtagId, mediaType, challengeDescription, createdTimestamp},function(data, status){
+		alert("Go all challenges data!");
+	});
+
+</script>
+</body>
+<script>
+    /* Set the width of the side navigation to 250px */
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    /* Set the width of the side navigation to 0 */
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+  </script>
+  
+</html>
+
