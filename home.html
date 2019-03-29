@@ -52,23 +52,32 @@
 
     $(function() {
       // function getChallenges(){
-        var apiUrl = 'http://localhost:3000/getAllChallenges';
+        var apiUrl = 'https://floating-atoll-66970.herokuapp.com/getAllChallenges';
       
         fetch(apiUrl,{
           method: "GET",
-          mode: "cors",
+          // mode: "cors",
+          // Access-Control-Allow-Origin: "*",
+          // origin: "*",
           headers: {
-                // "Access-Control-Allow-Origin": "*"
+                // "Access-Control-Request-Method": "GET",
+                // "Content-Type": "application/json",
+                // "Access-Control-Allow-Header": "Content-Type",
+                "Access-Control-Allow-Origin": "*"
+
             }
         }).then(response => {
-          return response.json();
-        }).then(data => {
-          $table.bootstrapTable({data: data})
+          console.log((response))
+          return response;
+        }).then(data =>{
           console.log(data);
+          return data;
         }).catch(err => {
+          console.log("ERROR" + err);
+          return err;
           // Do something for an error here
         });
-      $table.bootstrapTable({data: data})
+      // $table.bootstrapTable({data: data})
     }
     )
   </script>
