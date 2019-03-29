@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="home.css">
    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <link href="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.css" rel="stylesheet">
 
+  <script src="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.js"></script>
     <title>Title Page</title>
 
   </head>
@@ -24,68 +26,61 @@
 	</div>
 	<span onclick="openNav()">&#9776; <!-- Results in ☰ -->
 </span>
-
-
-
-
   <body>
     <h1>Welcome to Swarm</h1>
-    <h2>Here are a list of challenges:</h2>
-
-    <script type="text/javascript">
-    	// $.get("https://sleepy-dawn-84485.herokuapp.com/getAllChallenges", function(data, status){
-    	// 	alert("Go all challenges data!");
-    	// });
-
-    	$.ajax({
-    type: 'GET',
-    url: 'https://sleepy-dawn-84485.herokuapp.com/getAllChallenges',
-    dataType: 'jsonp',
-    crossDomain: true,
-    data: jsonData,
-    success: function() { console.log(jsonData) },
-    error: function() { alert("Error"); }
-});
-    	
-
+    <h2>Here are a list of challenges:</h2>    
     </script>
+      <table id="table">
+        <thead>
+          <tr>
+            <th data-field="id">Challenge ID</th>
+            <th data-field="challenge_name">Name</th>
+            <th data-field="start_date">Start Date</th>
+            <th data-field="end_date">End Date</th>
+            <th data-active="start_date">Active</th>
+            <th data-field="hashtags_ids">Hashtag Id</th>
+            <th data-field="media_type">Media Type</th>
+            <th data-active="multiplier">Multipler</th>
+            <th data-field="description">Description</th>
+            
+          </tr>
+        </thead>
+      </table>
 
+  <script>
+    var $table = $('#table')
 
-    <table id="challengeTable" class="table">
-	    <thead>
-		    <tr>
-		        <th>Challenge Name</th>
-		        <th>Start Date</th>
-		       	<th>End Date</th>
-		        <th>Hashtags</th>
-		        <th>Media Type</th>
-		        <th>Challenge Description</th>
-		        <th>Created Timestamp</th>
-		    </tr>
-		</thead>
-		<tbody>
-			<tr>
-		        <th>Example Name</th>
-		        <th>Example Start Date</th>
-		       	<th>Example End Date</th>
-		        <th>Example Hashtags</th>
-		        <th>Example Media Type</th>
-		        <th>Example Challenge Description</th>
-		        <th>Example Created Timestamp</th>
-		    </tr>
-		</tbody>
+    $(function() {
+      // function getChallenges(){
+        var apiUrl = 'http://localhost:3000/getAllChallenges';
+      
+        fetch(apiUrl,{
+          method: "GET",
+          mode: "cors",
+          headers: {
+                // "Access-Control-Allow-Origin": "*"
+            }
+        }).then(response => {
+          return response.json();
+        }).then(data => {
+          $table.bootstrapTable({data: data})
+          console.log(data);
+        }).catch(err => {
+          // Do something for an error here
+        });
+      $table.bootstrapTable({data: data})
+    }
+    )
+  </script>
 
-	</table>
 	<br><br>
 
 
 
-	<a href="addChallenge.html">Click to add a new challenge</a>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 
   <script>

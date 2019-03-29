@@ -27,9 +27,9 @@
 </span>
 <h2>Create New Challenge</h2>
 
-<form>
+<form id = "challenge">
   Challenge Name:<br>
-  <input type="text" name="challengeName">
+  <input type="text" name="challengeName" id = "challengeName">
   <br>
   Start Date:<br>
   <input type="text" name="startDate">
@@ -52,12 +52,38 @@
 </form>
 
 <br><br>
-<input type="submit" value="Add Challenge">
+<input id = "submit" type="submit" value="Add Challenge" >
 <script type="text/javascript">
-	$.post(URL/addChallenge, {challengeName, startDate,endDate,hashtagId, mediaType, challengeDescription, createdTimestamp},function(data, status){
-		alert("Go all challenges data!");
-	});
+  document.getElementById("submit").addEventListener("click", addChallenge);
 
+  function addChallenge(){
+    const form = document.getElementById('challenge');
+    var url = 'http://localhost:3000/addChallenge?';
+    var p = '';
+    for (var i = 0; i < form.length; i++) {
+      if (i!=0){
+        p+='&'
+      }
+      p+=form[i].name;
+      p+='=';
+      p+=form[i].value;
+    }
+    console.log(p);
+    url +=p;
+    fetch(url,{
+      method: "POST",
+      mode: "cors",
+      headers: {
+            // "Access-Control-Allow-Origin": "*"
+        }
+    }).then(response => {
+      return response.json();
+    }).catch(err => {
+      // Do something for an error here
+      alert("Something went wrong");
+
+    });
+  }
 </script>
 </body>
 <script>
