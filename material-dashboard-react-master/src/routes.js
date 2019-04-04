@@ -16,6 +16,7 @@ import Icons from "views/Icons/Icons.jsx";
 import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
+import ChallengesPage from "views/Challenges/ChallengesPage.jsx";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.jsx";
 
@@ -32,6 +33,13 @@ const dashboardRoutes = [
     name: "User Profile",
     icon: Person,
     component: UserProfile,
+    layout: "/admin"
+  },
+  {
+    path: "/challenge",
+    name: "Challenges",
+    icon: Person,
+    component: ChallengesPage,
     layout: "/admin"
   },
   {
