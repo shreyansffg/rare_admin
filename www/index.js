@@ -2,11 +2,10 @@
 
 function ajaxRequest(params){
     // function getChallenges(){
-  var apiUrl = 'https://floating-atoll-66970.herokuapp.com/getAllChallenges';
     
   $.ajax({
         type: "GET",
-        url: "https://floating-atoll-66970.herokuapp.com/getAllChallenges",
+        url: "https://murmuring-chamber-85644.herokuapp.com/getAllChallenges",
         data: "user-id=1",
 // You are expected to receive the generated JSON (json_encode($data))
         dataType: "json",
