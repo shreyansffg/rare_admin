@@ -1,32 +1,26 @@
-var $table = $('#table')
+// var $table = $('#table')
 
-$(function() {
+function ajaxRequest(params){
     // function getChallenges(){
-    var apiUrl = 'http://127.0.0.1:3000/getAllChallenges';
-
-    fetch(apiUrl,{
-      method: "GET",
-      // mode: "cors",
-      // Access-Control-Allow-Origin: "*",
-      // origin: "*",
-      headers: {
-        // "Access-Control-Request-Method": "GET",
-        // "Content-Type": "application/json",
-        // "Access-Control-Allow-Header": "Content-Type",
-        // "Access-Control-Allow-Origin": "*"
-
-      }
-    }).then(response => {
-      console.log((response))
-      return response;
-    }).then(data =>{
-      console.log(data);
-      return data;
-    }).catch(err => {
-      console.log("ERROR" + err);
-      return err;
-      // Do something for an error here
+  var apiUrl = 'https://floating-atoll-66970.herokuapp.com/getAllChallenges';
+    
+  $.ajax({
+        type: "GET",
+        url: "https://floating-atoll-66970.herokuapp.com/getAllChallenges",
+        data: "user-id=1",
+// You are expected to receive the generated JSON (json_encode($data))
+        dataType: "json",
+        success: function (data) {
+            params.success({
+// By default, Bootstrap table wants a "rows" property with the data
+                "rows": data,
+// You must provide the total item ; here let's say it is for array length
+                "total": data.length
+            })
+        },
+        error: function (er) {
+            params.error(er);
+        }
     });
-    // $table.bootstrapTable({data: data})
-  }
-);
+
+}
