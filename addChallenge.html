@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="home.css">
+
+
+    <title>Add Challenge Page</title>
+
+  </head>
+    </head>
+   <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="home.html">About</a>
+  <a href="addChallenge.html">Add Challenge</a>
+
+  </div>
+  <span onclick="openNav()">&#9776; <!-- Results in ☰ -->
+</span>
+<h2>Create New Challenge</h2>
+
+<form id = "challenge">
+  Challenge Name:<br>
+  <input type="text" name="challengeName" id = "challengeName">
+  <br>
+  Start Date:<br>
+  <input type="text" name="startDate">
+  <br>
+  End Date:<br>
+  <input type="text" name="endDate">
+  <br>
+  Hashtag:<br>
+  <input type="text" name="hashtagId">
+  <br>
+  Media Type:<br>
+  <input type="text" name="mediaType">
+  <br>
+  Challenge Description:<br>
+  <input type="text" name="challengeDescription">
+  <br>
+  Create Timestamp:<br>
+  <input type="text" name="createdTimestamp">
+  <br>
+</form>
+
+<br><br>
+<input id = "submit" type="submit" value="Add Challenge" >
+<script type="text/javascript">
+  document.getElementById("submit").addEventListener("click", addChallenge);
+
+  function addChallenge(){
+    const form = document.getElementById('challenge');
+    var url = 'https://murmuring-chamber-85644.herokuapp.com/addChallenge?';
+    var p = '';
+    for (var i = 0; i < form.length; i++) {
+      if (i!=0){
+        p+='&'
+      }
+      p+=form[i].name;
+      p+='=';
+      p+=form[i].value;
+    }
+    console.log(p);
+    url +=p;
+    fetch(url,{
+      method: "POST",
+      mode: "cors",
+      headers: {
+            // "Access-Control-Allow-Origin": "*"
+        }
+    }).then(response => {
+      return response.json();
+    }).catch(err => {
+      // Do something for an error here
+      alert("Something went wrong");
+
+    });
+  }
+</script>
+</body>
+<script>
+    /* Set the width of the side navigation to 250px */
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    /* Set the width of the side navigation to 0 */
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+  </script>
+  
+</html>
+
