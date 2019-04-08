@@ -15,6 +15,8 @@ import CardFooter from "components/Card/CardFooter.jsx";
 
 import avatar from "assets/img/faces/marc.jpg";
 
+
+
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -33,6 +35,8 @@ const styles = {
     textDecoration: "none"
   }
 };
+
+
 
 function ChallengesPage(props) {
   const { classes } = props;
@@ -145,6 +149,7 @@ function ChallengesPage(props) {
   );
 };
 
+
 function addChallenge(){
   const form = document.getElementById('challenge');
   var url = 'https://murmuring-chamber-85644.herokuapp.com/addChallenge?';
@@ -160,5 +165,7 @@ function addChallenge(){
     alert("Something went wrong");
   });
 }
+
+
 
 export default withStyles(styles)(ChallengesPage);

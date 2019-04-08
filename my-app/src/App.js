@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import AppNav from './Drawer/AppNav.js';
 import './App.css';
 import * as ReactDOM from "react-dom";
 
@@ -82,33 +82,15 @@ class Dashboard extends Component {
     this.state = {
       pages: [
         {
-          "id": "1",
-          "name": "name 1",
+          "id": "challengesNav",
+          "name": "Challenges",
           "icon": "file",
           "children": []
         },
         {
-          "id": "2",
-          "name": "name 2",
+          "id": "usersNav",
+          "name": "Users",
           "icon": "home",
-          "children": []
-        },
-        {
-          "id": "3",
-          "name": "name 3",
-          "icon": "clipboard",
-          "children": []
-        },
-        {
-          "id": "4",
-          "name": "name 4",
-          "icon": "code-fork",
-          "children": []
-        },
-        {
-          "id": "5",
-          "name": "name 5",
-          "icon": "database",
           "children": []
         }
       ]
@@ -117,20 +99,11 @@ class Dashboard extends Component {
   }
 
   render() {
-    return (
-      <div className="container-fluid">
-        <div className="row">
-          <Sidebar>
-            <Menu pages={this.state.pages} />
-          </Sidebar>
-          <PageView page={this.state.pages[0]} />
-        </div>
-      </div>
-    );
+    return <AppNav/>
   }
 }
 
-ReactDOM.render(<Dashboard />, document.getElementById('root'));
+// ReactDOM.render(<Drawer />, document.getElementById('root'));
 
 
 export default Dashboard;
