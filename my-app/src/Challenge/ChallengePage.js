@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 // import MenuItem from '@material-ui/core/MenuItem';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import DatePicker from 'react-datepicker';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   container: {
@@ -27,16 +26,6 @@ const styles = theme => ({
   },
 });
 
-const isActive = [
-  {
-    value: '1',
-    label: 'Active',
-  },
-  {
-    value: '0',
-    label: 'Disabled',
-  }
-];
 
 const mediaType = [
   {
@@ -82,17 +71,17 @@ class Switches extends React.Component{
   }
 }
 
-
 class TextFields extends React.Component {
+
+
+
+
   state = {
     name: '',
     points:0,
     multiplier: 0,
     multiline: 'Controlled',
-    mediaType: 'photos',
-    checkedA: true,
-
-    // date: new Date("01/28/1996")
+    mediaType: 'photos'
   };
 
   handleChange = name => event => {
@@ -128,8 +117,7 @@ class TextFields extends React.Component {
           style={{ margin: 8 }}
           multiline
           rows="3"
-          placeholder="Placeholder"
-          helperText="This description will be seen by users on challenge home page."
+          placeholder="This description will be seen by users on challenge home page."
           fullWidth
           margin="normal"
           InputLabelProps={{
@@ -143,7 +131,7 @@ class TextFields extends React.Component {
           style={{ margin: 8 }}
           multiline
           rows="3"
-          helperText="Instructions will be seen by users playing the game."
+          placeholder="Instructions will be seen by users playing the game."
           fullWidth
           margin="normal"
           InputLabelProps={{
@@ -151,12 +139,25 @@ class TextFields extends React.Component {
           }}
         />
 
-        {/*<DatePicker*/}
-        {/*  id="start-date"*/}
-        {/*  selected={this.state.startDate}*/}
-        {/*  onChange={this.handleChange}*/}
-        {/*/>*/}
+        <TextField
+          id="date"
+          label="Start Date"
+          type="date"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
 
+        <TextField
+          id="date"
+          label="End Date"
+          type="date"
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
 
         <TextField
           required
@@ -174,10 +175,9 @@ class TextFields extends React.Component {
           required
           id="multiplier"
           label="Multipier"
-          value={this.state.multiplier}
           onChange={this.handleChange('multiplier')}
           type="number"
-          helperText="Enter multiplier for streaks."
+          placeholder="Enter multiplier for streaks."
           className={classes.textField}
           InputLabelProps={{
             shrink: true,
@@ -185,13 +185,6 @@ class TextFields extends React.Component {
           margin="normal"
         />
 
-        <TextField
-          id="standard-search"
-          label="Search field"
-          type="search"
-          className={classes.textField}
-          margin="normal"
-        />
         <TextField
           id="select-media-type"
           select
@@ -213,6 +206,7 @@ class TextFields extends React.Component {
           ))}
         </TextField>
         <Switches/>
+        <Button variant="contained" color="primary" className={classes.button} style={{margin: '1em'}}>Create Challenge</Button>
       </form>
     );
   }
