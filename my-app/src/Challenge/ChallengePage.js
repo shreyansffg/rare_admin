@@ -88,8 +88,9 @@ class TextFields extends React.Component {
       startDate: '',
       endDate: '',
       active: 1,
-      hashtagId: 0,
-      hashtagList: []
+      hashtagName: null,
+      hashtagList: [],
+      hashtagName: ''
     };
   componentWillMount(){
     this.getAllHashtags();
@@ -97,34 +98,37 @@ class TextFields extends React.Component {
 
   handleChange = fieldName => event => {
     console.log(event.target.value);
-    console.log(this.state.hashtagList);
+  
     this.setState({ [fieldName]: event.target.value });
+  
   };
   
   submitButton = () => {
     alert("submitted");
+    // var url = "https://murmuring-chamber-85644.herokuapp.com/addChallenge?"
+    var headers = new Headers();  
+    headers.append("Authorization", "Basic " + base64.encode("admin:passwd123"));
 
-    var url = "https://murmuring-chamber-85644.herokuapp.com/addChallenge?"
+    var url = "https://localhost:4000/admin/addChallenge?"
     url+='&challengeName='+this.state.name;
     url+='&challengeDescription='+this.state.description;
     url+='&startDate='+this.state.startDate;
     url+='&endDate='+this.state.endDate;
     url+='&active='+this.state.active;
-    url+='&hashtagId='+this.state.hashtagId;
+    url+='&hashtagName='+this.state.hashtagName;
     url+='&mediaType='+this.state.mediaType;
     console.log(url);
-    // fetch(url,{
-    //   method: "POST",
-    //   mode: "cors",
-    //   headers: {
-    //         // "Access-Control-Allow-Origin": "*"
-    //     }
-    // }).then(response => {
-    //   return response.json();
-    // }).catch(err => {
-    //   // Do something for an error here
-    //   alert("Something went wrong");
-    // });
+    fetch(url,{
+      method: "POST",
+      mode: "cors",
+      headers: headers
+    }).then(response => {
+       console.log(response);
+      return response.json();
+    }).catch(err => {
+      // Do something for an error here
+      alert("Something went wrong");
+    });
   };
 
   getAllHashtags = () => {
@@ -154,6 +158,26 @@ class TextFields extends React.Component {
       alert("Something went wrong");
     });
   };
+  addHashtag = () => {
+    var headers = new Headers();  
+    headers.append("Authorization", "Basic " + base64.encode("admin:passwd123"));
+
+    var url = "https://murmuring-chamber-85644.herokuapp.com/addHashtag?"
+    url+='&hashtag_name='+this.state.hashtagName;
+    url+='&points=10';
+    
+    console.log(url);
+    fetch(url,{
+      method: "POST",
+      mode: "cors",
+      headers: headers
+    }).then(response => {
+      return response.json();
+    }).catch(err => {
+      // Do something for an error here
+      alert("Something went wrong");
+    });
+  };
 
   render() {
     const { classes } = this.props;
@@ -169,16 +193,7 @@ class TextFields extends React.Component {
           onChange={this.handleChange('name')}
           margin="dense"
         />
-        <TextField
-          required
-          id="hashtag"
-          label="Hashtags"
-          className={classes.textField}
-          onChange={this.handleChange('hashtagId')}
-          helperText="Hashtag will be used to find posts."
-          margin="dense"
-        />
-
+       
         <TextField
           required
           id="challenge-description"
@@ -277,15 +292,15 @@ class TextFields extends React.Component {
             </option>
           ))}
         </TextField>
+        
         <TextField
           id="select-hashtag-type"
+          label = 'Hashtags'
           select
-          label="Hashtags"
           className={classes.textField}
-          value={this.state.hashtagId}
-          onChange={this.handleChange('hashtagId')}
+          value={this.state.hashtagName}
+          onChange={this.handleChange('hashtagName')}
           SelectProps={{
-            native: true,
             MenuProps: {
               className: classes.menu,
             },
