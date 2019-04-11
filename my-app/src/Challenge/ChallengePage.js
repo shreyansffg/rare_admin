@@ -8,6 +8,10 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
 
+const base64 = require('base-64');
+
+
+
 const styles = theme => ({
   container: {
     display: 'flex',
@@ -47,6 +51,7 @@ class Switches extends React.Component{
     isActive: true
   };
 
+
   handleChange = name => event => {
     this.setState({ [name]: event.target.checked });
   };
@@ -72,20 +77,82 @@ class Switches extends React.Component{
 }
 
 class TextFields extends React.Component {
+ 
+    state = {
+      name: '',
+      points:0,
+      multiplier: 0,
+      multiline: 'Controlled',
+      mediaType: 'photos',
+      description: '',
+      startDate: '',
+      endDate: '',
+      active: 1,
+      hashtagId: 0,
+      hashtagList: []
+    };
+  componentWillMount(){
+    this.getAllHashtags();
+  }
 
+  handleChange = fieldName => event => {
+    console.log(event.target.value);
+    console.log(this.state.hashtagList);
+    this.setState({ [fieldName]: event.target.value });
+  };
+  
+  submitButton = () => {
+    alert("submitted");
 
-
-
-  state = {
-    name: '',
-    points:0,
-    multiplier: 0,
-    multiline: 'Controlled',
-    mediaType: 'photos'
+    var url = "https://murmuring-chamber-85644.herokuapp.com/addChallenge?"
+    url+='&challengeName='+this.state.name;
+    url+='&challengeDescription='+this.state.description;
+    url+='&startDate='+this.state.startDate;
+    url+='&endDate='+this.state.endDate;
+    url+='&active='+this.state.active;
+    url+='&hashtagId='+this.state.hashtagId;
+    url+='&mediaType='+this.state.mediaType;
+    console.log(url);
+    // fetch(url,{
+    //   method: "POST",
+    //   mode: "cors",
+    //   headers: {
+    //         // "Access-Control-Allow-Origin": "*"
+    //     }
+    // }).then(response => {
+    //   return response.json();
+    // }).catch(err => {
+    //   // Do something for an error here
+    //   alert("Something went wrong");
+    // });
   };
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
+  getAllHashtags = () => {
+    var url = "http://localhost:4000/admin/getAllHashtags";
+    var headers = new Headers();  
+    headers.append("Authorization", "Basic " + base64.encode("admin:passwd123"));
+
+    fetch(url,{
+      method: "GET",
+      mode: "cors",
+      headers: headers, 
+     
+    }).then(res =>{
+      // console.log(res.json());
+      // console.log(res.data);
+
+      return res.json();
+    })
+    .then(response => {
+      // console.log(response.data);
+      this.setState({ ['hashtagList']: response } );
+      console.log(this.state.hashtagList);
+    }).then(data =>{
+      // console.log(data);
+    }).catch(err => {
+      // Do something for an error here
+      alert("Something went wrong");
+    });
   };
 
   render() {
@@ -98,6 +165,7 @@ class TextFields extends React.Component {
           id="challenge-name"
           label="Challenge Name"
           className={classes.textField}
+          value={this.state.name}
           onChange={this.handleChange('name')}
           margin="dense"
         />
@@ -106,6 +174,7 @@ class TextFields extends React.Component {
           id="hashtag"
           label="Hashtags"
           className={classes.textField}
+          onChange={this.handleChange('hashtagId')}
           helperText="Hashtag will be used to find posts."
           margin="dense"
         />
@@ -117,6 +186,7 @@ class TextFields extends React.Component {
           style={{ margin: 8 }}
           multiline
           rows="3"
+          onChange={this.handleChange('description')}
           placeholder="This description will be seen by users on challenge home page."
           fullWidth
           margin="normal"
@@ -143,6 +213,7 @@ class TextFields extends React.Component {
           id="date"
           label="Start Date"
           type="date"
+          onChange={this.handleChange('startDate')}
           className={classes.textField}
           InputLabelProps={{
             shrink: true,
@@ -153,6 +224,7 @@ class TextFields extends React.Component {
           id="date"
           label="End Date"
           type="date"
+          onChange={this.handleChange('endDate')}
           className={classes.textField}
           InputLabelProps={{
             shrink: true,
@@ -205,8 +277,28 @@ class TextFields extends React.Component {
             </option>
           ))}
         </TextField>
+        <TextField
+          id="select-hashtag-type"
+          select
+          label="Hashtags"
+          className={classes.textField}
+          value={this.state.hashtagId}
+          onChange={this.handleChange('hashtagId')}
+          SelectProps={{
+            native: true,
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
+        >
+          {(this.state.hashtagList).map(option => (
+            <option key={option.id} value={option.hashtag_name}>
+              {option.hashtag_name}
+            </option>
+          ))}
+        </TextField>
         <Switches/>
-        <Button variant="contained" color="primary" className={classes.button} style={{margin: '1em'}}>Create Challenge</Button>
+        <Button onClick={() =>this.submitButton()} variant="contained" color="primary" className={classes.button} style={{margin: '1em'}}>Create Challenge</Button>
       </form>
     );
   }
