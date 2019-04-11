@@ -62,7 +62,8 @@ class Switches extends React.Component{
               checked={this.state.isActive}
               onChange={this.handleChange('isActive')}
               value="checkedA"
-            />}
+            />
+          }
           label="Activate Challenge"
         />
       </FormGroup>
