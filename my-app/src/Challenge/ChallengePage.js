@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-// import MenuItem from '@material-ui/core/MenuItem';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+
+const base64 = require('base-64');
+
 
 const styles = theme => ({
   container: {
@@ -75,14 +78,75 @@ class Switches extends React.Component{
 class TextFields extends React.Component {
 
 
-
-
   state = {
     name: '',
     points:0,
     multiplier: 0,
     multiline: 'Controlled',
-    mediaType: 'photos'
+    mediaType: 'photos',
+    challengeList: null,
+    hashtagList: null
+  };
+
+  componentWillMount(){
+    this.getAllHashtags();
+    this.getAllChallenges();
+  }
+
+  getAllHashtags = () => {
+    let url = "http://localhost:4000/admin/getAllHashtags";
+    let headers = new Headers();
+    headers.append("Authorization", "Basic " + base64.encode("admin:passwd123"));
+
+    fetch(url,{
+      method: "GET",
+      mode: "cors",
+      headers: headers,
+
+    }).then(res =>{
+      // console.log(res.json());
+      // console.log(res.data);
+
+      return res.json();
+    })
+      .then(response => {
+        // console.log(response.data);
+        this.setState({ ['hashtagList']: response } );
+        console.log(this.state.hashtagList);
+      }).then(data =>{
+      // console.log(data);
+    }).catch(err => {
+      // Do something for an error here
+      alert("Something went wrong");
+    });
+  };
+
+  getAllChallenges = () => {
+    let url = "http://localhost:4000/admin/getAllChallenges";
+    let headers = new Headers();
+    headers.append("Authorization", "Basic " + base64.encode("admin:passwd123"));
+
+    fetch(url,{
+      method: "GET",
+      mode: "cors",
+      headers: headers,
+
+    }).then(res =>{
+      // console.log(res.json());
+      // console.log(res.data);
+
+      return res.json();
+    })
+      .then(response => {
+        // console.log(response.data);
+        this.setState({ ['challengeList']: response } );
+        console.log(this.state.challengeList);
+      }).then(data =>{
+      // console.log(data);
+    }).catch(err => {
+      // Do something for an error here
+      alert("Something went wrong");
+    });
   };
 
   handleChange = name => event => {
