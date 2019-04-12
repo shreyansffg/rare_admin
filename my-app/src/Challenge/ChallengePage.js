@@ -109,14 +109,16 @@ class TextFields extends React.Component {
     var headers = new Headers();  
     headers.append("Authorization", "Basic " + base64.encode("admin:passwd123"));
 
-    var url = "https://localhost:4000/admin/addChallenge?"
+    var url = "http://localhost:4000/admin/addChallenge?"
     url+='&challengeName='+this.state.name;
-    url+='&challengeDescription='+this.state.description;
+    url+='&description='+this.state.description;
     url+='&startDate='+this.state.startDate;
     url+='&endDate='+this.state.endDate;
     url+='&active='+this.state.active;
     url+='&hashtagName='+this.state.hashtagName;
     url+='&mediaType='+this.state.mediaType;
+    url+='&multiplier='+this.state.multiplier;
+
     console.log(url);
     fetch(url,{
       method: "POST",
@@ -124,10 +126,8 @@ class TextFields extends React.Component {
       headers: headers
     }).then(response => {
        console.log(response);
-      return response.json();
     }).catch(err => {
-      // Do something for an error here
-      alert("Something went wrong");
+      alert("Something went wrong with Challenge addition");
     });
   };
 
