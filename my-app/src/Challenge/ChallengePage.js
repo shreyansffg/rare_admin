@@ -99,6 +99,7 @@ class TextFields extends React.Component {
       multiplier: 0,
       multiline: 'Controlled',
       mediaType: 'photos',
+      instructions: '',
       description: '',
       startDate: '',
       endDate: '',
@@ -135,6 +136,8 @@ class TextFields extends React.Component {
     url+='&hashtagName='+this.state.hashtagName;
     url+='&mediaType='+this.state.mediaType;
     url+='&multiplier='+this.state.multiplier;
+    url+='&instructions='+this.state.instruction;
+    url+='&max_points='+this.state.points;
 
     console.log(url);
     fetch(url,{
@@ -252,6 +255,7 @@ class TextFields extends React.Component {
           style={{ margin: 8 }}
           multiline
           rows="3"
+          onChange={this.handleChange('instruction')}
           placeholder="Instructions will be seen by users playing the game."
           fullWidth
           margin="normal"
@@ -366,6 +370,8 @@ class TextFields extends React.Component {
             <TableCell align="right">Media Type</TableCell>
             <TableCell align="right">Multipler</TableCell>
             <TableCell align="right">Active</TableCell>
+            <TableCell align="right">Instructions</TableCell>
+            <TableCell align="right">Max Points</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -382,6 +388,8 @@ class TextFields extends React.Component {
               <TableCell align="right">{row.media_type}</TableCell>
               <TableCell align="right">{row.multiplier}</TableCell>
               <TableCell align="right">{row.active}</TableCell>
+              <TableCell align="right">{row.instructions}</TableCell>
+              <TableCell align="right">{row.max_points}</TableCell>
 
             </TableRow>
           ))}
