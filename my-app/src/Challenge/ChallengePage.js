@@ -351,28 +351,38 @@ class TextFields extends React.Component {
         <Switches/>
         <Button onClick={() =>this.submitButton()} variant="contained" color="primary" className={classes.button} style={{margin: '1em'}}>Create Challenge</Button>
       </form>
+
       <div>
       <Paper className={classes.root}>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat (g)</TableCell>
-            <TableCell align="right">Carbs (g)</TableCell>
-            <TableCell align="right">Protein (g)</TableCell>
+            <TableCell>ID</TableCell>
+            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">Description</TableCell>
+            <TableCell align="right">Start Date</TableCell>
+            <TableCell align="right">End Date</TableCell>
+            <TableCell align="right">Hashtag Name</TableCell>
+            <TableCell align="right">Media Type</TableCell>
+            <TableCell align="right">Multipler</TableCell>
+            <TableCell align="right">Active</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {this.state.challengeList.map(row => (
             <TableRow key={row.id}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row.id}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+              <TableCell align="right">{row.challenge_name}</TableCell>
+              <TableCell align="right">{row.description}</TableCell>
+              <TableCell align="right">{row.start_date}</TableCell>
+              <TableCell align="right">{row.end_date}</TableCell>
+               <TableCell align="right">{row.hashtags_name}</TableCell>
+              <TableCell align="right">{row.media_type}</TableCell>
+              <TableCell align="right">{row.multiplier}</TableCell>
+              <TableCell align="right">{row.active}</TableCell>
+
             </TableRow>
           ))}
         </TableBody>
