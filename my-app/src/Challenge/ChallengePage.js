@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-// import MenuItem from '@material-ui/core/MenuItem';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,10 +14,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import Grid from '@material-ui/core/Grid';
 
 const base64 = require('base-64');
-
-
 
 const styles = theme => ({
   root: {
@@ -82,7 +81,8 @@ class Switches extends React.Component{
               checked={this.state.isActive}
               onChange={this.handleChange('isActive')}
               value="checkedA"
-            />}
+            />
+          }
           label="Activate Challenge"
         />
       </FormGroup>
@@ -111,7 +111,7 @@ class TextFields extends React.Component {
   componentWillMount(){
     this.getAllHashtags();
     this.getAllChallenges();
-  }
+  };
 
   handleChange = fieldName => event => {
     console.log(event.target.value);
@@ -149,26 +149,23 @@ class TextFields extends React.Component {
   };
 
   getAllHashtags = () => {
-    var url = "http://localhost:4000/admin/getAllHashtags";
-    var headers = new Headers();  
+    let url = "http://localhost:4000/admin/getAllHashtags";
+    let headers = new Headers();
     headers.append("Authorization", "Basic " + base64.encode("admin:passwd123"));
 
     fetch(url,{
       method: "GET",
       mode: "cors",
-      headers: headers, 
-     
-    }).then(res =>{
-      // console.log(res.json());
-      // console.log(res.data);
+      headers: headers,
 
+    }).then(res =>{
       return res.json();
     })
-    .then(response => {
-      // console.log(response.data);
-      this.setState({ ['hashtagList']: response } );
-      console.log(this.state.hashtagList);
-    }).then(data =>{
+      .then(response => {
+        // console.log(response.data);
+        this.setState({ ['hashtagList']: response } );
+        console.log(this.state.hashtagList);
+      }).then(data =>{
       // console.log(data);
     }).catch(err => {
       // Do something for an error here
