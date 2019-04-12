@@ -7,12 +7,24 @@ import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
 
 const base64 = require('base-64');
 
 
 
 const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -21,6 +33,9 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 200,
+  },
+   table: {
+    minWidth: 700,
   },
   dense: {
     marginTop: 19,
@@ -90,10 +105,12 @@ class TextFields extends React.Component {
       active: 1,
       hashtagName: null,
       hashtagList: [],
-      hashtagName: ''
+      hashtagName: '',
+      challengeList: []
     };
   componentWillMount(){
     this.getAllHashtags();
+    this.getAllChallenges();
   }
 
   handleChange = fieldName => event => {
@@ -158,6 +175,27 @@ class TextFields extends React.Component {
       alert("Something went wrong");
     });
   };
+
+  getAllChallenges = () => {
+    var url = "http://localhost:4000/admin/getAllChallenges";
+    var headers = new Headers();  
+    headers.append("Authorization", "Basic " + base64.encode("admin:passwd123"));
+
+    fetch(url,{
+      method: "GET",
+      mode: "cors",
+      headers: headers, 
+    }).then(res =>{
+      return res.json();
+    })
+    .then(response => {
+      this.setState({ ['challengeList']: response } );
+      console.log(this.state.challengeList);
+    }).catch(err => {
+      // Do something for an error here
+      alert("Something went wrong");
+    });
+  };
   addHashtag = () => {
     var headers = new Headers();  
     headers.append("Authorization", "Basic " + base64.encode("admin:passwd123"));
@@ -183,6 +221,7 @@ class TextFields extends React.Component {
     const { classes } = this.props;
 
     return (
+      <div>
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
           required
@@ -315,6 +354,35 @@ class TextFields extends React.Component {
         <Switches/>
         <Button onClick={() =>this.submitButton()} variant="contained" color="primary" className={classes.button} style={{margin: '1em'}}>Create Challenge</Button>
       </form>
+      <div>
+      <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>Dessert (100g serving)</TableCell>
+            <TableCell align="right">Calories</TableCell>
+            <TableCell align="right">Fat (g)</TableCell>
+            <TableCell align="right">Carbs (g)</TableCell>
+            <TableCell align="right">Protein (g)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {this.state.challengeList.map(row => (
+            <TableRow key={row.id}>
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="right">{row.calories}</TableCell>
+              <TableCell align="right">{row.fat}</TableCell>
+              <TableCell align="right">{row.carbs}</TableCell>
+              <TableCell align="right">{row.protein}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
+      </div>
+      </div>
     );
   }
 }
