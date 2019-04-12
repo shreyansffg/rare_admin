@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
+import CenteredGrid from '../Grid/grid';
 
 const base64 = require('base-64');
 
@@ -57,19 +57,19 @@ class Switches extends React.Component{
   render() {
     return(
 
-      <FormGroup row>
-        <FormControlLabel
-          control={
-            <Switch
-              id="select-is-active"
-              checked={this.state.isActive}
-              onChange={this.handleChange('isActive')}
-              value="checkedA"
-            />
-          }
-          label="Activate Challenge"
-        />
-      </FormGroup>
+        <FormGroup row>
+          <FormControlLabel
+            control={
+              <Switch
+                id="select-is-active"
+                checked={this.state.isActive}
+                onChange={this.handleChange('isActive')}
+                value="checkedA"
+              />
+            }
+            label="Activate Challenge"
+          />
+        </FormGroup>
 
       )
   }
@@ -157,7 +157,9 @@ class TextFields extends React.Component {
     const { classes } = this.props;
 
     return (
-      <form className={classes.container} noValidate autoComplete="off">
+      <CenteredGrid>
+
+        {<form className={classes.container} noValidate autoComplete="off">
         <TextField
           required
           id="challenge-name"
@@ -272,7 +274,8 @@ class TextFields extends React.Component {
         </TextField>
         <Switches/>
         <Button variant="contained" color="primary" className={classes.button} style={{margin: '1em'}}>Create Challenge</Button>
-      </form>
+      </form>}
+      </CenteredGrid>
     );
   }
 }
